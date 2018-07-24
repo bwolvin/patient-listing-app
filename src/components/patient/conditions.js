@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import dateFormat from 'dateformat';
 import 'react-table/react-table.css'
 import '../../css/patient.css';
 
@@ -13,9 +12,7 @@ class PatientConditions extends Component {
         const columns = [{
             Header: 'Date Recorded',
             accessor: 'dateRecorded',
-            Cell: props => (
-                <span>{dateFormat(props.value, "mmmm dS, yyyy")}</span>
-            )
+            width: 150
         }, {
             id: 'conditionName',
             Header: 'Name',

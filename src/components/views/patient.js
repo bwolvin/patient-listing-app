@@ -19,23 +19,30 @@ class Patient extends Component {
         this.state = {
             patient: {},
             conditions: [],
-            isLoading: false
+            isLoading: false,
+            errorMessage: ""
         };
     }
 
     renderPatientDetails(){
-        const { isLoading, patient, conditions } = this.state;
+        const { isLoading, patient, conditions, errorMessage } = this.state;
 
         // Display loading graphic until we have patient details data
         if (isLoading) {
             return (
                 <Spinner message="Loading..." />
             );
+        } else if (errorMessage) {
+            return (
+                <div>{errorMessage}</div>
+            );
         } else {
             return (
                 <div>
-                    <h3>{patient.name}</h3>
-                    <PatientDemographics patient={patient} />
+                    <div className="patient-details">
+                        <h3 className="patient-details-header">{patient.name}</h3>
+                        <PatientDemographics patient={patient} />
+                    </div>
                     <PatientConditions conditions={conditions} />
                 </div>
             );
@@ -63,15 +70,18 @@ class Patient extends Component {
                     isLoading: false
                 });
             }))
-            .catch(function(error) {
-                console.log(error);
+            .catch((error) => {
+                this.setState({
+                    errorMessage: error.message,
+                    isLoading: false
+                });
             });
         });
     }
 
     render() {
         return (
-            <div className="patient-details"> 
+            <div className="patient-listing"> 
                 <div className="patient-details-container">
                     {this.renderPatientDetails()}
                 </div>
