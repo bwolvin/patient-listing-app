@@ -1,0 +1,16 @@
+.patient-details-container {
+    margin: 0 0 20px 0;
+}
+
+.home-link {
+    color: black;
+    font-size: 13px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.patient-details-meta {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 0 20px 0;
+}
