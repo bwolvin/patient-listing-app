@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getPatients } from '../api/patientApi';
+import { getPatients } from '../../api/patientApi';
 
 class Home extends Component {
 
@@ -26,20 +26,19 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Patient Directory</h1>
-                <h2>Select a patient</h2>
+                <h3>Select a patient</h3>
                 <select onChange={ this.handleOnChange.bind(this) }>
-                    <option defaultValue="Choose a patient">Choose a patient</option>
+                    <option defaultValue="Choose a patient">Select a patient</option>
                     {
                         this.state.patients.map(patient => (
-                            <option key={patient.id} value={patient.id} >
+                            <option key={patient.id} value={patient.id}>
                                 {patient.name}
                             </option>
                         ))
                     }
                 </select>
             </div>
-        )
+        );
     }
 }
 

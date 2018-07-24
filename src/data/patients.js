@@ -10,4 +10,4 @@ export const patientData = [
     { id: 4342012, name: "Timmy Smart" },
     { id: 4478007, name: "Fred Smart" },
     { id: 1316024, name: "Tim Peters" }
-]
+];

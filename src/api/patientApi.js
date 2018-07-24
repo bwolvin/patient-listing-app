@@ -13,15 +13,16 @@ export function getPatients() {
 }
 
 /**
- * Get details for a given patient id
+ * Get demographics for a given patient id
  * @param  {string} patientId id of selected patient
  * @returns {object} Promise from from axios request
 */
-export function getPatientDetails(patientId) {
+export function getDemographicsForPatient(patientId) {
     const patientRequestUrl = `${baseUrl}Patient?_id=${patientId}`;
     return axios.get(patientRequestUrl)
     .then(res => {
         const patient = res.data.entry[0].resource;
+        // Slim down properties for patient that we are returning
         return {
             name: patient.name[0].text,
             gender: patient.gender,
@@ -35,7 +36,7 @@ export function getPatientDetails(patientId) {
  * @param  {string} patientId id of selected patient
  * @returns {object} Promise from from axios request
 */
-export function getPatientConditions(patientId) {
+export function getActiveConditionsForPatient(patientId) {
     const patientConditionsRequestUrl = `${baseUrl}Condition?patient=${patientId}&clinicalstatus=active`;
     return axios.get(patientConditionsRequestUrl)
     .then(res => {
@@ -46,9 +47,10 @@ export function getPatientConditions(patientId) {
         */
         const conditions = res.data.entry;
         return conditions.map(condition => {
+            const dateRecorded = condition.resource.dateRecorded;
             return {
                 code: condition.resource.code,
-                dateRecorded: condition.resource.dateRecorded
+                dateRecorded: dateRecorded ? dateRecorded : 'NA'
             };
         });
     });

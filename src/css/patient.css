@@ -9,8 +9,6 @@
     margin: 0;
 }
 
-.patient-details-meta {
-    border: 1px solid #ccc;
-    padding: 10px;
+.patient-demographics {
     margin: 0 0 20px 0;
 }

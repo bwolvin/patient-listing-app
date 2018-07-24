@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import dateFormat from 'dateformat';
 import 'react-table/react-table.css'
-import '../css/patient.css';
+import '../../css/patient.css';
 
 class PatientConditions extends Component {
 
     render() {
 
-        const pubMedUrl = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
+        const pubMedUrl = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=';
 
         const columns = [{
             Header: 'Date Recorded',
@@ -34,6 +34,7 @@ class PatientConditions extends Component {
             </div>
         );
     }
+
 }
   
-  export default PatientConditions;
+export default PatientConditions;

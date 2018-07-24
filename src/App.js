@@ -1,10 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from './components/home';
-import Patient from './components/patient';
+import Home from './components/views/home';
+import Patient from './components/views/patient';
 
 const App = () => (
-    <div className="patient-listing">
+    <div className="patient-directory">
+        <h1>Patient Directory</h1>
         <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/patient/:id' component={Patient} />
@@ -12,4 +13,4 @@ const App = () => (
     </div>
 )
 
-export default App
+export default App;

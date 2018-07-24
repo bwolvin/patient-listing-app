@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from 'reactjs-simple-spinner';
 
-import { getPatientDetails, getPatientConditions } from '../api/patientApi';
-import PatientDetails from './patientDetails';
-import PatientConditions from './patientConditions';
-import '../css/patient.css';
+import { 
+    getDemographicsForPatient, 
+    getActiveConditionsForPatient 
+} from '../../api/patientApi';
+import PatientDemographics from '../patient/demographics';
+import PatientConditions from '../patient/conditions';
+import '../../css/patient.css';
 
 class Patient extends Component {
 
@@ -16,22 +19,23 @@ class Patient extends Component {
         this.state = {
             patient: {},
             conditions: [],
-            loading: false
+            isLoading: false
         };
     }
 
     renderPatientDetails(){
-        const { loading, patient, conditions } = this.state;
+        const { isLoading, patient, conditions } = this.state;
 
         // Display loading graphic until we have patient details data
-        if (loading) {
+        if (isLoading) {
             return (
                 <Spinner message="Loading..." />
             );
         } else {
             return (
                 <div>
-                    <PatientDetails patient={patient} />
+                    <h3>{patient.name}</h3>
+                    <PatientDemographics patient={patient} />
                     <PatientConditions conditions={conditions} />
                 </div>
             );
@@ -44,10 +48,10 @@ class Patient extends Component {
          * state after both api requests have resolved
         */
         const patientId = this.props.match.params.id;
-        this.setState({ loading: true }, () => {
+        this.setState({ isLoading: true }, () => {
             axios.all([
-                getPatientDetails(patientId),
-                getPatientConditions(patientId)
+                getDemographicsForPatient(patientId),
+                getActiveConditionsForPatient(patientId)
             ]).then(axios.spread((patient, conditions) => {
                 this.setState({
                     patient: {
@@ -56,7 +60,7 @@ class Patient extends Component {
                         birthDate: patient.birthDate
                     },
                     conditions: conditions,
-                    loading: false
+                    isLoading: false
                 });
             }))
             .catch(function(error) {
@@ -68,14 +72,12 @@ class Patient extends Component {
     render() {
         return (
             <div className="patient-details"> 
-                <h1>Patient Directory</h1>
                 <div className="patient-details-container">
-                    <h2>Patient Details</h2>
                     {this.renderPatientDetails()}
                 </div>
                 <Link to='/' className="home-link">Back</Link>
             </div>
-        )
+        );
     }
 }
 
