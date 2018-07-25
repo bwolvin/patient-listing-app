@@ -4,8 +4,7 @@ React app for displaying patient details from dropdown
 # Goal
 
 * read and display a given patient’s demographic data (name, gender, date of birth)
-
-* display a sortable table of active conditions that the patient currently has, including
+* display a sortable table of active conditions that the patient currently has
 
 
 # Installation
