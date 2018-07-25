@@ -6,16 +6,6 @@ import { patientData } from '../data/patients';
 const baseUrl = 'https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/';
 
 /**
- * Get date recorded for condition. If it exists
- * return formatted date, otherwise return NA
- * @param  {string} dateRecorded recorded date of condition
- * @returns {string} formatted string
-*/
-function getDateRecordedFormat(dateRecorded) {
-    return dateRecorded = dateRecorded ? dateFormat(dateRecorded, "mmmm dS, yyyy") : 'NA';
-}
-
-/**
  * Get sample set of patients
  * @returns {array} list of test patient data
 */
@@ -33,11 +23,12 @@ export function getDemographicsForPatient(patientId) {
     return axios.get(patientRequestUrl)
     .then(res => {
         const patient = res.data.entry[0].resource;
+        const birthDate = dateFormat(patient.birthDate, "mmmm dS, yyyy");
         // Slim down properties for patient that we are returning
         return {
             name: patient.name[0].text,
             gender: patient.gender,
-            birthDate: dateFormat(patient.birthDate, "mmmm dS, yyyy")
+            birthDate: birthDate
         }
     });
 }
@@ -58,9 +49,11 @@ export function getActiveConditionsForPatient(patientId) {
         */
         const conditions = res.data.entry;
         return conditions.map(condition => {
+            const formattedDate = dateFormat(condition.resource.dateRecorded, "mmmm dS, yyyy");
+            const dateRecorded = condition.resource.dateRecorded ? formattedDate : 'NA';
             return {
                 code: condition.resource.code,
-                dateRecorded: getDateRecordedFormat(condition.resource.dateRecorded)
+                dateRecorded: dateRecorded
             };
         });
     });

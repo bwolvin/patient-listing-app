@@ -26,9 +26,9 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h3>Select a patient</h3>
+                <h3>Patient Selection</h3>
                 <select onChange={ this.handleOnChange.bind(this) }>
-                    <option defaultValue="Choose a patient">Select a patient</option>
+                    <option defaultValue="Choose a patient">Please select a patient</option>
                     {
                         this.state.patients.map(patient => (
                             <option key={patient.id} value={patient.id}>

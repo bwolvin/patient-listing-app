@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Spinner from 'reactjs-simple-spinner';
 
 import { 
@@ -50,11 +49,13 @@ class Patient extends Component {
     }
 
     componentDidMount() {
+        // Get patient id from param in route
+        const patientId = this.props.match.params.id;
+
         /**
          * Get patient details and conditions and set initial
          * state after both api requests have resolved
         */
-        const patientId = this.props.match.params.id;
         this.setState({ isLoading: true }, () => {
             axios.all([
                 getDemographicsForPatient(patientId),
@@ -85,7 +86,6 @@ class Patient extends Component {
                 <div className="patient-details-container">
                     {this.renderPatientDetails()}
                 </div>
-                <Link to='/' className="home-link">Back</Link>
             </div>
         );
     }
